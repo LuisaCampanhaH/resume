@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luisa Campanha — Résumé</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-page:#ffffff;
+    --bg-sidebar:#1e1b4b;
+    --text-main:#18181b;
+    --text-muted:#52525b;
+    --text-sidebar:#e4e4f5;
+    --text-sidebar-muted:#a5a3d1;
+    --accent:#7c3aed;
+    --accent-soft:#ede9fe;
+    --rule:#e4e4e7;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Inter', sans-serif;
+    color:var(--text-main);
+    background:var(--bg-page);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---- language toggle: single source of truth ---- */
+  [data-lang="en"]{display:none;}
+  body.show-en [data-lang="pt"]{display:none;}
+  body.show-en [data-lang="en"]{display:inline;}
+
+  .page{
+    display:grid;
+    grid-template-columns:290px 1fr;
+    max-width:1000px;
+    margin:0 auto;
+    min-height:100vh;
+  }
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    background:var(--bg-sidebar);
+    color:var(--text-sidebar);
+    padding:48px 32px;
+  }
+  .lang-toggle{
+    display:inline-flex;
+    border:1px solid rgba(228,228,245,0.25);
+    border-radius:999px;
+    overflow:hidden;
+    margin-bottom:32px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+  }
+  .lang-toggle button{
+    background:none;
+    border:none;
+    color:var(--text-sidebar-muted);
+    padding:6px 14px;
+    cursor:pointer;
+    font-family:inherit;
+    font-size:inherit;
+  }
+  .lang-toggle button.active{
+    background:var(--accent);
+    color:#fff;
+  }
+  .name{
+    font-family:'Fraunces', serif;
+    font-size:30px;
+    font-weight:600;
+    line-height:1.15;
+    color:#fff;
+  }
+  .prompt{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--accent);
+    margin-top:6px;
+    margin-bottom:6px;
+  }
+  .prompt::before{content:"$ "; opacity:0.6;}
+  .tagline{
+    font-size:14px;
+    color:var(--text-sidebar-muted);
+    margin-bottom:28px;
+  }
+  .btn-pdf{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:var(--accent);
+    color:#fff;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:600;
+    padding:10px 16px;
+    border-radius:8px;
+    margin-bottom:36px;
+    justify-content:center;
+  }
+  .side-section{margin-bottom:30px;}
+  .side-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:10px;
+  }
+  .contact-list{list-style:none; font-size:13.5px;}
+  .contact-list li{margin-bottom:8px; word-break:break-word;}
+  .contact-list a{color:var(--text-sidebar); text-decoration:none;}
+  .contact-list a:hover{color:#fff; text-decoration:underline;}
+  .skill-group{margin-bottom:14px;}
+  .skill-group h4{font-size:12.5px; color:#fff; font-weight:600; margin-bottom:5px;}
+  .skill-group p{font-size:13px; color:var(--text-sidebar-muted);}
+  .lang-row{display:flex; justify-content:space-between; font-size:13.5px; margin-bottom:6px;}
+  .lang-row .level{color:var(--text-sidebar-muted);}
+
+  /* ---------- MAIN ---------- */
+  .main{padding:48px 44px;}
+  .section{margin-bottom:34px;}
+  .section h2{
+    font-family:'Fraunces', serif;
+    font-size:19px;
+    font-weight:600;
+    color:var(--text-main);
+    border-bottom:2px solid var(--rule);
+    padding-bottom:8px;
+    margin-bottom:16px;
+  }
+  .summary p{font-size:14.5px; color:var(--text-muted); max-width:60ch;}
+
+  .entry{margin-bottom:20px;}
+  .entry:last-child{margin-bottom:0;}
+  .entry-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:4px 12px;
+  }
+  .entry-title{font-size:15px; font-weight:600;}
+  .entry-org{font-size:13.5px; color:var(--text-muted);}
+  .entry-date{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--accent);
+    white-space:nowrap;
+  }
+  .entry p{font-size:13.5px; color:var(--text-muted); margin-top:6px; max-width:62ch;}
+  .tags{margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;}
+  .tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    background:var(--accent-soft);
+    color:var(--accent);
+    padding:2px 8px;
+    border-radius:5px;
+  }
+  .entry-links{margin-top:8px; display:flex; gap:14px; flex-wrap:wrap;}
+  .entry-links a{
+    font-size:12.5px;
+    color:var(--accent);
+    text-decoration:none;
+    font-weight:600;
+  }
+  .entry-links a:hover{text-decoration:underline;}
+
+  .awards-list{list-style:none;}
+  .awards-list li{
+    font-size:13.5px;
+    padding-left:20px;
+    position:relative;
+    margin-bottom:8px;
+    color:var(--text-main);
+  }
+  .awards-list li::before{
+    content:"🏆";
+    position:absolute;
+    left:0;
+    font-size:12px;
+  }
+
+  footer{
+    grid-column:1 / -1;
+    text-align:center;
+    padding:22px;
+    font-size:12px;
+    color:var(--text-muted);
+    border-top:1px solid var(--rule);
+  }
+
+  @media (max-width:760px){
+    .page{grid-template-columns:1fr;}
+    .sidebar{padding:32px 24px;}
+    .main{padding:32px 24px;}
+  }
+
+  @media print{
+    .lang-toggle, .btn-pdf{display:none;}
+    .page{grid-template-columns:220px 1fr; max-width:100%;}
+    .sidebar{background:#fff !important; color:#000; border-right:1px solid #ccc;}
+    .name, .side-label, .skill-group h4{color:#000 !important;}
+    .tagline, .contact-list a, .skill-group p, .lang-row .level{color:#333 !important;}
+    body{background:#fff;}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <aside class="sidebar">
+    <div class="lang-toggle">
+      <button id="btn-pt" class="active" onclick="setLang('pt')">PT</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+
+    <div class="name">Luisa<br>Campanha</div>
+    <div class="prompt">whoami</div>
+    <div class="tagline">
+      <span data-lang="pt">Estudante de Ciência da Computação · PUC Minas</span><span data-lang="en">Computer Science Student · PUC Minas</span>
+    </div>
+
+    <a class="btn-pdf" href="./assets/Luisa_Campanha_Resume.pdf" download>
+      ⬇ <span data-lang="pt">Baixar PDF</span><span data-lang="en">Download PDF</span>
+    </a>
+
+    <div class="side-section">
+      <div class="side-label"><span data-lang="pt">Contato</span><span data-lang="en">Contact</span></div>
+      <ul class="contact-list">
+        <li>📍 Belo Horizonte, MG — Brasil</li>
+        <li>✉️ <a href="mailto:campanhaluisa@gmail.com">campanhaluisa@gmail.com</a></li>
+        <li>💼 <a href="https://linkedin.com/in/luisa-campanha" target="_blank">linkedin.com/in/luisa-campanha</a></li>
+        <li>💻 <a href="https://github.com/LuisaCampanhaH" target="_blank">github.com/LuisaCampanhaH</a></li>
+      </ul>
+    </div>
+
+    <div class="side-section">
+      <div class="side-label"><span data-lang="pt">Competências Técnicas</span><span data-lang="en">Technical Skills</span></div>
+      <div class="skill-group">
+        <h4><span data-lang="pt">Linguagens</span><span data-lang="en">Languages</span></h4>
+        <p>Python · C · JavaScript · Verilog</p>
+      </div>
+      <div class="skill-group">
+        <h4>Hardware</h4>
+        <p><span data-lang="pt">RISC-V, Lógica Digital, Sistemas Embarcados</span><span data-lang="en">RISC-V, Digital Logic, Embedded Systems</span></p>
+      </div>
+      <div class="skill-group">
+        <h4><span data-lang="pt">Ferramentas</span><span data-lang="en">Tools</span></h4>
+        <p>Git · GitHub · Linux · VS Code</p>
+      </div>
+      <div class="skill-group">
+        <h4><span data-lang="pt">Áreas</span><span data-lang="en">Areas</span></h4>
+        <p><span data-lang="pt">IA Generativa, Machine Learning, IoT</span><span data-lang="en">Generative AI, Machine Learning, IoT</span></p>
+      </div>
+    </div>
+
+    <div class="side-section">
+      <div class="side-label"><span data-lang="pt">Competências Comportamentais</span><span data-lang="en">Core Strengths</span></div>
+      <p style="font-size:13px; color:var(--text-sidebar-muted); line-height:1.7;">
+        <span data-lang="pt">Liderança de equipe · Comunicação técnica · Aprendizado autônomo · Trabalho em equipe</span><span data-lang="en">Team leadership · Technical communication · Self-directed learning · Teamwork</span>
+      </p>
+    </div>
+
+    <div class="side-section" style="margin-bottom:0;">
+      <div class="side-label"><span data-lang="pt">Idiomas</span><span data-lang="en">Languages</span></div>
+      <div class="lang-row">
+        <span><span data-lang="pt">Português</span><span data-lang="en">Portuguese</span></span>
+        <span class="level"><span data-lang="pt">Nativo</span><span data-lang="en">Native</span></span>
+      </div>
+      <div class="lang-row">
+        <span><span data-lang="pt">Inglês</span><span data-lang="en">English</span></span>
+        <span class="level"><span data-lang="pt">Avançado</span><span data-lang="en">Advanced</span></span>
+      </div>
+      <div class="lang-row">
+        <span><span data-lang="pt">Espanhol</span><span data-lang="en">Spanish</span></span>
+        <span class="level"><span data-lang="pt">Intermediário</span><span data-lang="en">Intermediate</span></span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <section class="section summary">
+      <h2><span data-lang="pt">Resumo Profissional</span><span data-lang="en">Professional Summary</span></h2>
+      <p>
+        <span data-lang="pt">Estudante do 4º período de Ciência da Computação da PUC Minas, com sólido desempenho em Arquitetura de Computadores I e II e experiência prática no desenvolvimento de um processador RISC-V em Verilog. Atualmente participo de pesquisa em Inteligência Artificial Generativa e modelagem conceitual, desenvolvendo capacidade analítica e de resolução de problemas. Busco atuar como monitora, compartilhando conhecimentos técnicos com dedicação, organização e espírito colaborativo.</span><span data-lang="en">4th-semester Computer Science student at PUC Minas, with strong performance in Computer Architecture I & II and hands-on experience building a RISC-V processor in Verilog. Currently researching Generative AI applied to conceptual modeling, developing strong analytical and problem-solving skills. Looking to work as a teaching assistant, sharing technical knowledge with dedication, organization, and a collaborative spirit.</span>
+      </p>
+    </section>
+
+    <section class="section">
+      <h2><span data-lang="pt">Experiência em Pesquisa</span><span data-lang="en">Research Experience</span></h2>
+      <div class="entry">
+        <div class="entry-head">
+          <div>
+            <div class="entry-title"><span data-lang="pt">Pesquisadora de Iniciação Científica</span><span data-lang="en">Undergraduate Research Assistant</span></div>
+            <div class="entry-org">PUC Minas</div>
+          </div>
+          <div class="entry-date"><span data-lang="pt">mai/2026 — atual</span><span data-lang="en">May 2026 — present</span></div>
+        </div>
+        <p><span data-lang="pt">Pesquisa em IA Generativa aplicada à modelagem conceitual (Human-in-the-Loop). Foco em Ciência de Dados, Teoria dos Grafos e Modelagem.</span><span data-lang="en">Research on Generative AI applied to conceptual modeling (Human-in-the-Loop). Focus on Data Science, Graph Theory, and Modeling.</span></p>
+        <div class="entry-links">
+          <a href="https://github.com/LuisaCampanhaH/Sphere-M" target="_blank">→ Sphere-M repo</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2><span data-lang="pt">Projetos</span><span data-lang="en">Projects</span></h2>
+
+      <div class="entry">
+        <div class="entry-head">
+          <div class="entry-title">RV32I Monocycle Processor</div>
+        </div>
+        <p><span data-lang="pt">Implementação completa de arquitetura monociclo com 100% de cobertura funcional, baseada na especificação oficial RISC-V.</span><span data-lang="en">Complete single-cycle architecture implementation with 100% functional coverage, based on the official RISC-V specification.</span></p>
+        <div class="tags"><span class="tag">Verilog</span><span class="tag">RV32I</span></div>
+        <div class="entry-links">
+          <a href="https://github.com/LuisaCampanhaH/RV32_monocycle_processor" target="_blank">→ GitHub</a>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <div>
+            <div class="entry-title">MediSync</div>
+            <div class="entry-org"><span data-lang="pt">Hackathon PUC Minas 2026</span><span data-lang="en">PUC Minas Hackathon 2026</span></div>
+          </div>
+        </div>
+        <p><span data-lang="pt">Coordenadora técnica de hardware. Dispenser inteligente de medicamentos (IoT) com integração mobile voltado à redução de erros.</span><span data-lang="en">Technical hardware lead. Smart medication dispenser (IoT) with mobile integration focused on reducing dosing errors.</span></p>
+        <div class="tags"><span class="tag">ESP32</span><span class="tag">React Native</span><span class="tag">Node.js</span></div>
+        <div class="entry-links">
+          <a href="https://github.com/LuisaCampanhaH/Hackathon-MediSync" target="_blank">→ GitHub</a>
+          <a href="https://luisacampanhah.github.io/Hackathon-MediSync/" target="_blank">→ <span data-lang="pt">Landing Page</span><span data-lang="en">Landing Page</span></a>
+          <a href="https://hackathon-medi-sync.vercel.app/" target="_blank">→ <span data-lang="pt">Abrir App</span><span data-lang="en">Open App</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2><span data-lang="pt">Prêmios</span><span data-lang="en">Awards</span></h2>
+      <ul class="awards-list">
+        <li><span data-lang="pt">Melhor Trabalho Interdisciplinar</span><span data-lang="en">Best Interdisciplinary Project</span> — Front-End (2025)</li>
+        <li><span data-lang="pt">Finalista, Trabalho Interdisciplinar</span><span data-lang="en">Finalist, Interdisciplinary Project</span> — Back-End (2025)</li>
+      </ul>
+    </section>
+
+    <section class="section" style="margin-bottom:0;">
+      <h2><span data-lang="pt">Formação</span><span data-lang="en">Education</span></h2>
+      <div class="entry">
+        <div class="entry-head">
+          <div>
+            <div class="entry-title"><span data-lang="pt">Bacharelado em Ciência da Computação</span><span data-lang="en">B.Sc. in Computer Science</span></div>
+            <div class="entry-org">PUC Minas</div>
+          </div>
+          <div class="entry-date"><span data-lang="pt">2025 — atual</span><span data-lang="en">2025 — present</span></div>
+        </div>
+        <p><span data-lang="pt">Melhores desempenhos: Cálculo II (91) · Arquitetura de Computadores II (90) · Laboratório de Iniciação à Programação (89) · Arquitetura de Computadores I (83) · Introdução à Computação (83).</span><span data-lang="en">Top grades: Calculus II (91) · Computer Architecture II (90) · Intro to Programming Lab (89) · Computer Architecture I (83) · Intro to Computing (83).</span></p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span data-lang="pt">Última atualização: julho de 2026</span><span data-lang="en">Last updated: July 2026</span>
+  </footer>
+</div>
+
+<script>
+function setLang(lang){
+  document.body.classList.toggle('show-en', lang === 'en');
+  document.getElementById('btn-pt').classList.toggle('active', lang === 'pt');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+}
+</script>
+
+</body>
+</html>
