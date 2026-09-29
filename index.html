@@ -27,7 +27,7 @@
     -webkit-font-smoothing:antialiased;
   }
 
-  /* ---- language toggle: single source of truth ---- */
+  /* ---- troca de idioma: uma única fonte de verdade ---- */
   [data-lang="en"]{display:none;}
   body.show-en [data-lang="pt"]{display:none;}
   body.show-en [data-lang="en"]{display:inline;}
@@ -48,7 +48,7 @@
   }
   .lang-toggle{
     display:inline-flex;
-    border:1px solid rgba(228,228,245,0.25);
+    border:1px solid rgba(220,243,230,0.25);
     border-radius:999px;
     overflow:hidden;
     margin-bottom:32px;
@@ -64,10 +64,7 @@
     font-family:inherit;
     font-size:inherit;
   }
-  .lang-toggle button.active{
-    background:var(--accent);
-    color:#fff;
-  }
+  .lang-toggle button.active{background:var(--accent); color:#fff;}
   .name{
     font-family:'Fraunces', serif;
     font-size:30px;
@@ -83,11 +80,7 @@
     margin-bottom:6px;
   }
   .prompt::before{content:"$ "; opacity:0.6;}
-  .tagline{
-    font-size:14px;
-    color:var(--text-sidebar-muted);
-    margin-bottom:28px;
-  }
+  .tagline{font-size:14px; color:var(--text-sidebar-muted); margin-bottom:28px;}
   .btn-pdf{
     display:flex;
     align-items:center;
@@ -172,19 +165,7 @@
   .entry-links a:hover{text-decoration:underline;}
 
   .awards-list{list-style:none;}
-  .awards-list li{
-    font-size:13.5px;
-    padding-left:20px;
-    position:relative;
-    margin-bottom:8px;
-    color:var(--text-main);
-  }
-  .awards-list li::before{
-    content:"🏆";
-    position:absolute;
-    left:0;
-    font-size:12px;
-  }
+  .awards-list li{font-size:13.5px; margin-bottom:8px; color:var(--text-main);}
 
   footer{
     grid-column:1 / -1;
@@ -201,12 +182,17 @@
     .main{padding:32px 24px;}
   }
 
+  /* ---------- IMPRESSÃO / PDF ---------- */
+  @page{size:A4; margin:12mm;}
   @media print{
     .lang-toggle, .btn-pdf{display:none;}
-    .page{grid-template-columns:220px 1fr; max-width:100%;}
-    .sidebar{background:#fff !important; color:#000; border-right:1px solid #ccc;}
+    .prompt{display:none;}                      /* o "$ whoami" fica só no site */
+    .page{grid-template-columns:220px 1fr; max-width:100%; min-height:0;}
+    .sidebar{background:#fff !important; color:#000; border-right:1px solid #ccc; padding:0 20px 0 0;}
+    .main{padding:0 0 0 24px;}
     .name, .side-label, .skill-group h4{color:#000 !important;}
     .tagline, .contact-list a, .skill-group p, .lang-row .level{color:#333 !important;}
+    .entry{break-inside:avoid;}                 /* não corta um item entre páginas */
     body{background:#fff;}
   }
 </style>
@@ -220,31 +206,35 @@
       <button id="btn-en" onclick="setLang('en')">EN</button>
     </div>
 
-    <div class="name">Luisa<br>Campanha</div>
+    <h1 class="name">Luisa<br>Campanha</h1>
     <div class="prompt">whoami</div>
     <div class="tagline">
       <span data-lang="pt">Estudante de Ciência da Computação · PUC Minas</span><span data-lang="en">Computer Science Student · PUC Minas</span>
     </div>
 
-    <a class="btn-pdf" href="./assets/Luisa_Campanha_Resume.pdf" download>
+    <a id="pdf-link" class="btn-pdf" href="./assets/Luisa_Campanha_Resume_PT.pdf" download>
       ⬇ <span data-lang="pt">Baixar PDF</span><span data-lang="en">Download PDF</span>
     </a>
 
     <div class="side-section">
       <div class="side-label"><span data-lang="pt">Contato</span><span data-lang="en">Contact</span></div>
       <ul class="contact-list">
-        <li>📍 Belo Horizonte, MG — Brasil</li>
-        <li>✉️ <a href="mailto:campanhaluisa@gmail.com">campanhaluisa@gmail.com</a></li>
-        <li>💼 <a href="https://linkedin.com/in/luisa-campanha" target="_blank">linkedin.com/in/luisa-campanha</a></li>
-        <li>💻 <a href="https://github.com/LuisaCampanhaH" target="_blank">github.com/LuisaCampanhaH</a></li>
+        <li>Belo Horizonte, MG — Brasil</li>
+        <li><a href="mailto:campanhaluisa@gmail.com">campanhaluisa@gmail.com</a></li>
+        <li><a href="https://linkedin.com/in/luisa-campanha" target="_blank">linkedin.com/in/luisa-campanha</a></li>
+        <li><a href="https://github.com/LuisaCampanhaH" target="_blank">github.com/LuisaCampanhaH</a></li>
       </ul>
     </div>
 
     <div class="side-section">
       <div class="side-label"><span data-lang="pt">Competências Técnicas</span><span data-lang="en">Technical Skills</span></div>
       <div class="skill-group">
-        <h4><span data-lang="pt">Linguagens</span><span data-lang="en">Languages</span></h4>
-        <p>Python · C · JavaScript · Verilog</p>
+        <h4><span data-lang="pt">Linguagens (em projetos)</span><span data-lang="en">Languages (used in projects)</span></h4>
+        <p>Python · C++ · JavaScript · Verilog</p>
+      </div>
+      <div class="skill-group">
+        <h4><span data-lang="pt">Linguagens (básico)</span><span data-lang="en">Languages (basic)</span></h4>
+        <p>C · Java</p>
       </div>
       <div class="skill-group">
         <h4>Hardware</h4>
@@ -256,15 +246,8 @@
       </div>
       <div class="skill-group">
         <h4><span data-lang="pt">Áreas</span><span data-lang="en">Areas</span></h4>
-        <p><span data-lang="pt">IA Generativa, Machine Learning, IoT</span><span data-lang="en">Generative AI, Machine Learning, IoT</span></p>
+        <p><span data-lang="pt">IA Generativa, Teoria dos Grafos, IoT</span><span data-lang="en">Generative AI, Graph Theory, IoT</span></p>
       </div>
-    </div>
-
-    <div class="side-section">
-      <div class="side-label"><span data-lang="pt">Competências Comportamentais</span><span data-lang="en">Core Strengths</span></div>
-      <p style="font-size:13px; color:var(--text-sidebar-muted); line-height:1.7;">
-        <span data-lang="pt">Liderança de equipe · Comunicação técnica · Aprendizado autônomo · Trabalho em equipe</span><span data-lang="en">Team leadership · Technical communication · Self-directed learning · Teamwork</span>
-      </p>
     </div>
 
     <div class="side-section" style="margin-bottom:0;">
@@ -275,7 +258,7 @@
       </div>
       <div class="lang-row">
         <span><span data-lang="pt">Inglês</span><span data-lang="en">English</span></span>
-        <span class="level"><span data-lang="pt">Avançado</span><span data-lang="en">Advanced</span></span>
+        <span class="level"><span data-lang="pt">Avançado (C1)</span><span data-lang="en">Advanced (C1)</span></span>
       </div>
       <div class="lang-row">
         <span><span data-lang="pt">Espanhol</span><span data-lang="en">Spanish</span></span>
@@ -289,12 +272,13 @@
     <section class="section summary">
       <h2><span data-lang="pt">Resumo Profissional</span><span data-lang="en">Professional Summary</span></h2>
       <p>
-        <span data-lang="pt">Estudante do 4º período de Ciência da Computação da PUC Minas, com sólido desempenho em Arquitetura de Computadores I e II e experiência prática no desenvolvimento de um processador RISC-V em Verilog. Atualmente participo de pesquisa em Inteligência Artificial Generativa e modelagem conceitual, desenvolvendo capacidade analítica e de resolução de problemas. Busco atuar como monitora, compartilhando conhecimentos técnicos com dedicação, organização e espírito colaborativo.</span><span data-lang="en">4th-semester Computer Science student at PUC Minas, with strong performance in Computer Architecture I & II and hands-on experience building a RISC-V processor in Verilog. Currently researching Generative AI applied to conceptual modeling, developing strong analytical and problem-solving skills. Looking to work as a teaching assistant, sharing technical knowledge with dedication, organization, and a collaborative spirit.</span>
+        <span data-lang="pt">Estudante do 4º período de Ciência da Computação na PUC Minas (formatura prevista: 2028/2), com interesse em cibersegurança, IA e arquitetura de computadores. Pesquisadora de Iniciação Científica em IA Generativa aplicada à modelagem conceitual, autora de um processador RISC-V em Verilog e monitora de Arquitetura de Computadores II. Top 10 entre 200 equipes em hackathon, responsável pelo firmware IoT. Busco estágio remoto ou híbrido.</span><span data-lang="en">4th-semester Computer Science student at PUC Minas (expected graduation: 2028/2), interested in cybersecurity, AI, and computer architecture. Undergraduate researcher in Generative AI applied to conceptual modeling, author of a RISC-V processor in Verilog, and teaching assistant for Computer Architecture II. Top 10 out of 200 teams in a hackathon, responsible for the IoT firmware. Seeking a remote or hybrid internship.</span>
       </p>
     </section>
 
     <section class="section">
-      <h2><span data-lang="pt">Experiência em Pesquisa</span><span data-lang="en">Research Experience</span></h2>
+      <h2><span data-lang="pt">Experiência</span><span data-lang="en">Experience</span></h2>
+
       <div class="entry">
         <div class="entry-head">
           <div>
@@ -303,10 +287,24 @@
           </div>
           <div class="entry-date"><span data-lang="pt">mai/2026 — atual</span><span data-lang="en">May 2026 — present</span></div>
         </div>
-        <p><span data-lang="pt">Pesquisa em IA Generativa aplicada à modelagem conceitual (Human-in-the-Loop). Foco em Ciência de Dados, Teoria dos Grafos e Modelagem.</span><span data-lang="en">Research on Generative AI applied to conceptual modeling (Human-in-the-Loop). Focus on Data Science, Graph Theory, and Modeling.</span></p>
+        <!-- PREENCHER: acrescente ao parágrafo abaixo o que você constrói ou analisa de fato
+             (ferramentas, dados, resultado). Só escreva o que você consegue explicar em entrevista. -->
+        <p><span data-lang="pt">Pesquisa em IA Generativa aplicada à modelagem conceitual, com humano no ciclo (Human-in-the-Loop). Foco em Ciência de Dados, Teoria dos Grafos e Modelagem.</span><span data-lang="en">Research on Generative AI applied to conceptual modeling with a human in the loop (Human-in-the-Loop). Focus on Data Science, Graph Theory, and Modeling.</span></p>
         <div class="entry-links">
-          <a href="https://github.com/LuisaCampanhaH/Sphere-M" target="_blank">→ Sphere-M repo</a>
+          <a href="https://github.com/LuisaCampanhaH/Sphere-M" target="_blank">github.com/LuisaCampanhaH/Sphere-M</a>
         </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <div>
+            <div class="entry-title"><span data-lang="pt">Monitora de Arquitetura de Computadores II</span><span data-lang="en">Teaching Assistant, Computer Architecture II</span></div>
+            <div class="entry-org">PUC Minas</div>
+          </div>
+          <!-- PREENCHER: período da monitoria, por exemplo "2026/2 — atual" -->
+          <div class="entry-date"><span data-lang="pt">[período]</span><span data-lang="en">[period]</span></div>
+        </div>
+        <p><span data-lang="pt">Apoio a alunos em conteúdos de arquitetura de computadores, como lógica digital e processadores.</span><span data-lang="en">Support for students in computer architecture topics such as digital logic and processors.</span></p>
       </div>
     </section>
 
@@ -317,10 +315,10 @@
         <div class="entry-head">
           <div class="entry-title">RV32I Monocycle Processor</div>
         </div>
-        <p><span data-lang="pt">Implementação completa de arquitetura monociclo com 100% de cobertura funcional, baseada na especificação oficial RISC-V.</span><span data-lang="en">Complete single-cycle architecture implementation with 100% functional coverage, based on the official RISC-V specification.</span></p>
+        <p><span data-lang="pt">Implementei em Verilog um processador RISC-V monociclo com todas as instruções da ISA base RV32I, seguindo a especificação oficial.</span><span data-lang="en">Implemented a single-cycle RISC-V processor in Verilog covering every instruction of the RV32I base ISA, following the official specification.</span></p>
         <div class="tags"><span class="tag">Verilog</span><span class="tag">RV32I</span></div>
         <div class="entry-links">
-          <a href="https://github.com/LuisaCampanhaH/RV32_monocycle_processor" target="_blank">→ GitHub</a>
+          <a href="https://github.com/LuisaCampanhaH/RV32_monocycle_processor" target="_blank">github.com/LuisaCampanhaH/RV32_monocycle_processor</a>
         </div>
       </div>
 
@@ -328,15 +326,14 @@
         <div class="entry-head">
           <div>
             <div class="entry-title">MediSync</div>
-            <div class="entry-org"><span data-lang="pt">Hackathon PUC Minas 2026</span><span data-lang="en">PUC Minas Hackathon 2026</span></div>
+            <div class="entry-org"><span data-lang="pt">Hackathon PUC Minas 2026 · Top 10 entre 200 equipes</span><span data-lang="en">PUC Minas Hackathon 2026 · Top 10 out of 200 teams</span></div>
           </div>
         </div>
-        <p><span data-lang="pt">Coordenadora técnica de hardware. Dispenser inteligente de medicamentos (IoT) com integração mobile voltado à redução de erros.</span><span data-lang="en">Technical hardware lead. Smart medication dispenser (IoT) with mobile integration focused on reducing dosing errors.</span></p>
-        <div class="tags"><span class="tag">ESP32</span><span class="tag">React Native</span><span class="tag">Node.js</span></div>
+        <p><span data-lang="pt">Dispensador inteligente de medicamentos (IoT) com app mobile, voltado à redução de erros de dosagem. Minha parte: coordenação técnica do hardware e firmware em C++ no ESP32. Equipe: app em React Native e API em Node.js/PostgreSQL.</span><span data-lang="en">Smart medication dispenser (IoT) with a mobile app, aimed at reducing dosing errors. My part: technical lead for the hardware and C++ firmware on the ESP32. Team: React Native app and Node.js/PostgreSQL API.</span></p>
+        <div class="tags"><span class="tag">ESP32</span><span class="tag">C++</span><span class="tag">IoT</span></div>
         <div class="entry-links">
-          <a href="https://github.com/LuisaCampanhaH/Hackathon-MediSync" target="_blank">→ GitHub</a>
-          <a href="https://luisacampanhah.github.io/Hackathon-MediSync/" target="_blank">→ <span data-lang="pt">Landing Page</span><span data-lang="en">Landing Page</span></a>
-          <a href="https://hackathon-medi-sync.vercel.app/" target="_blank">→ <span data-lang="pt">Abrir App</span><span data-lang="en">Open App</span></a>
+          <a href="https://github.com/LuisaCampanhaH/Hackathon-MediSync" target="_blank">github.com/LuisaCampanhaH/Hackathon-MediSync</a>
+          <a href="https://hackathon-medi-sync.vercel.app/" target="_blank"><span data-lang="pt">Demo</span><span data-lang="en">Demo</span></a>
         </div>
       </div>
     </section>
@@ -344,8 +341,9 @@
     <section class="section">
       <h2><span data-lang="pt">Prêmios</span><span data-lang="en">Awards</span></h2>
       <ul class="awards-list">
-        <li><span data-lang="pt">Melhor Trabalho Interdisciplinar</span><span data-lang="en">Best Interdisciplinary Project</span> — Front-End (2025)</li>
-        <li><span data-lang="pt">Finalista, Trabalho Interdisciplinar</span><span data-lang="en">Finalist, Interdisciplinary Project</span> — Back-End (2025)</li>
+        <li><span data-lang="pt">Top 10 entre 200 equipes — Hackathon PUC Minas (2026)</span><span data-lang="en">Top 10 out of 200 teams — PUC Minas Hackathon (2026)</span></li>
+        <li><span data-lang="pt">Melhor Trabalho Interdisciplinar — Front-End (2025)</span><span data-lang="en">Best Interdisciplinary Project — Front-End (2025)</span></li>
+        <li><span data-lang="pt">Finalista, Trabalho Interdisciplinar — Back-End (2025)</span><span data-lang="en">Finalist, Interdisciplinary Project — Back-End (2025)</span></li>
       </ul>
     </section>
 
@@ -357,25 +355,32 @@
             <div class="entry-title"><span data-lang="pt">Bacharelado em Ciência da Computação</span><span data-lang="en">B.Sc. in Computer Science</span></div>
             <div class="entry-org">PUC Minas</div>
           </div>
-          <div class="entry-date"><span data-lang="pt">2025 — atual</span><span data-lang="en">2025 — present</span></div>
+          <div class="entry-date"><span data-lang="pt">2025 — 2028/2 (previsto)</span><span data-lang="en">2025 — 2028/2 (expected)</span></div>
         </div>
-        <p><span data-lang="pt">Melhores desempenhos: Cálculo II (91) · Arquitetura de Computadores II (90) · Laboratório de Iniciação à Programação (89) · Arquitetura de Computadores I (83) · Introdução à Computação (83).</span><span data-lang="en">Top grades: Calculus II (91) · Computer Architecture II (90) · Intro to Programming Lab (89) · Computer Architecture I (83) · Intro to Computing (83).</span></p>
+        <p><span data-lang="pt">Melhores desempenhos (escala 0–100): Cálculo II (91) · Arquitetura de Computadores II (90) · Laboratório de Iniciação à Programação (89) · Arquitetura de Computadores I (83) · Introdução à Computação (83).</span><span data-lang="en">Top grades (0–100 scale): Calculus II (91) · Computer Architecture II (90) · Intro to Programming Lab (89) · Computer Architecture I (83) · Intro to Computing (83).</span></p>
       </div>
     </section>
 
   </main>
 
   <footer>
-    <span data-lang="pt">Última atualização: julho de 2026</span><span data-lang="en">Last updated: July 2026</span>
+    <span data-lang="pt">Última atualização: setembro de 2026</span><span data-lang="en">Last updated: September 2026</span>
   </footer>
 </div>
 
 <script>
 function setLang(lang){
   document.body.classList.toggle('show-en', lang === 'en');
+  document.documentElement.lang = lang === 'en' ? 'en' : 'pt-BR';
   document.getElementById('btn-pt').classList.toggle('active', lang === 'pt');
   document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('pdf-link').href = lang === 'en'
+    ? './assets/Luisa_Campanha_Resume_EN.pdf'
+    : './assets/Luisa_Campanha_Resume_PT.pdf';
 }
+
+// abre já em inglês com  seusite/?lang=en
+setLang(new URLSearchParams(location.search).get('lang') === 'en' ? 'en' : 'pt');
 </script>
 
 </body>
